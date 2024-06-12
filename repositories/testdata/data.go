@@ -1,7 +1,5 @@
 package testdata
 
-import "github.com/yourname/reponame/models"
-
 var ArticleTestData = []models.Article{
 	models.Article{
 		ID:       1,

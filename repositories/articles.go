@@ -2,8 +2,6 @@ package repositories
 
 import (
 	"database/sql"
-
-	"github.com/yourname/reponame/models"
 )
 
 const (

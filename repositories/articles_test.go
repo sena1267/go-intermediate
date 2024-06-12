@@ -3,9 +3,7 @@ package repositories_test
 import (
 	"testing"
 
-	"github.com/yourname/reponame/models"
-	"github.com/yourname/reponame/repositories"
-	"github.com/yourname/reponame/repositories/testdata"
+	"github/sena1267/go-intermediaterepositories/testdata"
 
 	_ "github.com/go-sql-driver/mysql"
 )

@@ -1,6 +1,6 @@
 package services
 
-import "github.com/yourname/reponame/models"
+import "github.com/sena1267/go-intermediate/models"
 
 // /article関連を引き受けるサービス
 type ArticleServicer interface {

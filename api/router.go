@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/yourname/reponame/controllers"
-	"github.com/yourname/reponame/services"
+	"github.com/sena1267/go-intermediate/controllers"
+	"github.com/sena1267/go-intermediate/services"
 )
 
 func NewRouter(db *sql.DB) *mux.Router {

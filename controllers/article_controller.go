@@ -7,9 +7,9 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/yourname/reponame/apperrors"
-	"github.com/yourname/reponame/controllers/services"
-	"github.com/yourname/reponame/models"
+	"github.com/sena1267/go-intermediate/apperrors"
+	"github.com/sena1267/go-intermediate/controllers/services"
+	"github.com/sena1267/go-intermediate/models"
 )
 
 type ArticleController struct {

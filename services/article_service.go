@@ -3,10 +3,6 @@ package services
 import (
 	"database/sql"
 	"errors"
-
-	"github.com/yourname/reponame/apperrors"
-	"github.com/yourname/reponame/models"
-	"github.com/yourname/reponame/repositories"
 )
 
 // PostArticleHandlerで使うことを想定したサービス

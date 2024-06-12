@@ -2,9 +2,6 @@ package repositories_test
 
 import (
 	"testing"
-
-	"github.com/yourname/reponame/models"
-	"github.com/yourname/reponame/repositories"
 )
 
 // SelectCommentList関数のテスト
