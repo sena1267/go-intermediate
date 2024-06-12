@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/yourname/reponame/apperrors"
 	"github.com/yourname/reponame/controllers/services"
 	"github.com/yourname/reponame/models"
 )
@@ -20,6 +21,7 @@ func NewCommentController(s services.CommentServicer) *CommentController {
 func (c *CommentController) PostCommentHandler(w http.ResponseWriter, req *http.Request) {
 	var reqComment models.Comment
 	if err := json.NewDecoder(req.Body).Decode(&reqComment); err != nil {
+		err = apperrors.ReqBodyDecodeFailed.Wrap(err, "bad request body")
 		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
 	}
 
