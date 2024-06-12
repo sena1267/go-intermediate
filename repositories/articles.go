@@ -2,6 +2,8 @@ package repositories
 
 import (
 	"database/sql"
+
+	"github.com/sena1267/go-intermediate/models"
 )
 
 const (

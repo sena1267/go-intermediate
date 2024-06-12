@@ -2,6 +2,9 @@ package repositories_test
 
 import (
 	"testing"
+
+	"github.com/sena1267/go-intermediate/models"
+	"github.com/sena1267/go-intermediate/repositories"
 )
 
 // SelectCommentList関数のテスト

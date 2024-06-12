@@ -1,5 +1,7 @@
 package testdata
 
+import "github.com/sena1267/go-intermediate/models"
+
 var ArticleTestData = []models.Article{
 	models.Article{
 		ID:       1,

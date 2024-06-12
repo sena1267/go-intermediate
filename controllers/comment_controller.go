@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github/sena1267/go-intermediatecontrollers/services"
+	"github.com/sena1267/go-intermediate/apperrors"
+	"github.com/sena1267/go-intermediate/controllers/services"
+	"github.com/sena1267/go-intermediate/models"
 )
 
 type CommentController struct {

@@ -3,9 +3,10 @@ package repositories_test
 import (
 	"testing"
 
-	"github/sena1267/go-intermediaterepositories/testdata"
-
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/sena1267/go-intermediate/models"
+	"github.com/sena1267/go-intermediate/repositories"
+	"github.com/sena1267/go-intermediate/repositories/testdata"
 )
 
 // SelectArticleList関数のテスト
