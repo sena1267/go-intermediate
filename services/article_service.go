@@ -3,7 +3,6 @@ package services
 import (
 	"database/sql"
 	"errors"
-	"sync"
 
 	"github.com/sena1267/go-intermediate/apperrors"
 	"github.com/sena1267/go-intermediate/models"
@@ -45,30 +44,41 @@ func (s *MyAppService) GetArticleService(articleID int) (models.Article, error) 
 	var (
 		article                      models.Article
 		commentList                  []models.Comment
-		articleGetErr, commentGeterr error
-
-		amu sync.Mutex
-		cmu sync.Mutex
-		wg  sync.WaitGroup
+		articleGetErr, commentGetErr error
 	)
 
-	wg.Add(2)
+	type articleResult struct {
+		article models.Article
+		err     error
+	}
+	articleChan := make(chan articleResult)
+	defer close(articleChan)
 
-	go func(db *sql.DB, articleID int) {
-		defer wg.Done()
-		amu.Lock()
-		article, articleGetErr = repositories.SelectArticleDetail(db, articleID)
-		amu.Unlock()
-	}(s.db, articleID)
+	go func(ch chan<- articleResult, db *sql.DB, articleID int) {
+		article, err := repositories.SelectArticleDetail(db, articleID)
+		ch <- articleResult{article: article, err: err}
+	}(articleChan, s.db, articleID)
 
-	go func(db *sql.DB, articleID int) {
-		defer wg.Done()
-		cmu.Lock()
-		commentList, commentGeterr = repositories.SelectCommentList(db, articleID)
-		cmu.Unlock()
-	}(s.db, articleID)
+	type commentResult struct {
+		commentList *[]models.Comment
+		err         error
+	}
+	commentChan := make(chan commentResult)
+	defer close(commentChan)
 
-	wg.Wait()
+	go func(ch chan<- commentResult, db *sql.DB, articleID int) {
+		commentList, err := repositories.SelectCommentList(db, articleID)
+		ch <- commentResult{commentList: &commentList, err: err}
+	}(commentChan, s.db, articleID)
+
+	for i := 0; i < 2; i++ {
+		select {
+		case ar := <-articleChan:
+			article, articleGetErr = ar.article, ar.err
+		case cr := <-commentChan:
+			commentList, commentGetErr = *cr.commentList, cr.err
+		}
+	}
 
 	if articleGetErr != nil {
 		if errors.Is(articleGetErr, sql.ErrNoRows) {
@@ -79,8 +89,8 @@ func (s *MyAppService) GetArticleService(articleID int) (models.Article, error) 
 		return models.Article{}, err
 	}
 
-	if commentGeterr != nil {
-		err := apperrors.GetDataFailed.Wrap(commentGeterr, "fail to get data")
+	if commentGetErr != nil {
+		err := apperrors.GetDataFailed.Wrap(commentGetErr, "fail to get data")
 		return models.Article{}, err
 	}
 
